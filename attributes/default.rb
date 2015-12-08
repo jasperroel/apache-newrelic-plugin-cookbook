@@ -1,4 +1,4 @@
-unless node['newrelic'].nil? or node['newrelic']['license'].nil?
+unless default['newrelic'].nil? or default['newrelic']['license'].nil?
   default['apache_newrelic_plugin']['license'] = node['newrelic']['license']
 end
 ## Setting the plugin default (mostly commented out because the plugin also assumes the same defaults)
