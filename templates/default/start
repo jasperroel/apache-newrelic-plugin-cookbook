@@ -1,0 +1,5 @@
+#!/bin/sh
+DIRECTORY=/opt/apache-newrelic-plugin
+JAR_FILE=apachemonitor-plugin-1.0.2.jar
+cd ${DIRECTORY}
+java -jar ${DIRECTORY}/${JAR_FILE}

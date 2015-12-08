@@ -1,0 +1,15 @@
+{
+  "agents": [
+  <% @agents.each_with_index do |agent, i| %>
+    {
+      "name" : "<%= agent.name %>",
+      "protocol" : "<%= agent.protocol %>",
+      "host" : "<%= agent.host %>",
+      "port" : <%= agent.port %>,
+      "modStatusUrl" : "<%= agent.mod_status_url %>",
+      "connectionTimeout" : <%= agent.connection_timeout %>,
+      "readTimeout" : <%= agent.read_timeout %>
+    }<% if i < @agents.size - 1 %>,<% end %>
+  <% end %>
+  ]
+}
