@@ -7,6 +7,7 @@
 include_recipe 'java'
 
 apache_newrelic_user = 'apache-newrelic'
+base_directory = '/opt/apache-newrelic-plugin'
 
 user apache_newrelic_user do
   comment "Apache New Relic monitor"
@@ -17,7 +18,7 @@ user apache_newrelic_user do
 end
 
 # Setup folder structure
-directory '/opt/apache-newrelic-plugin' do
+directory "#{base_directory}" do
   owner "#{apache_newrelic_user}"
   group "#{apache_newrelic_user}"
   mode '0755'
@@ -25,7 +26,7 @@ directory '/opt/apache-newrelic-plugin' do
   action :create
 end
 
-directory '/opt/apache-newrelic-plugin/config' do
+directory "#{base_directory}/config" do
   owner "#{apache_newrelic_user}"
   group "#{apache_newrelic_user}"
   mode '0755'
@@ -33,7 +34,7 @@ directory '/opt/apache-newrelic-plugin/config' do
   action :create
 end
 
-directory '/opt/apache-newrelic-plugin/bin' do
+directory "#{base_directory}/bin" do
   owner "#{apache_newrelic_user}"
   group "#{apache_newrelic_user}"
   mode '0755'
@@ -43,7 +44,7 @@ end
 
 # Install the 2 basic config files
 template "newrelic.json" do
-  path "/opt/apache-newrelic-plugin/config/newrelic.json"
+  path "#{base_directory}/config/newrelic.json"
   source "newrelic.json"
   mode 0644
   owner "#{apache_newrelic_user}"
@@ -54,7 +55,7 @@ template "newrelic.json" do
 end
 
 template "plugin.json" do
-  path "/opt/apache-newrelic-plugin/config/plugin.json"
+  path "#{base_directory}/config/plugin.json"
   source "plugin.json"
   mode 0644
   owner "#{apache_newrelic_user}"
@@ -65,7 +66,7 @@ template "plugin.json" do
 end
 
 template 'start script' do
-  path '/opt/apache-newrelic-plugin/bin/start'
+  path "#{base_directory}/bin/start"
   source 'start'
   mode 0755
   owner "#{apache_newrelic_user}"
@@ -73,7 +74,7 @@ template 'start script' do
 end
 
 cookbook_file "main jar file" do
-  path '/opt/apache-newrelic-plugin/apachemonitor-plugin-1.0.2.jar'
+  path "#{base_directory}/apachemonitor-plugin-1.0.2.jar"
   source 'apachemonitor-plugin-1.0.2.jar'
   mode 0644
   owner "#{apache_newrelic_user}"
@@ -81,7 +82,7 @@ cookbook_file "main jar file" do
 end
 
 service "apache-newrelic-monitor" do
-  supports :restart => true, :start => true, :stop => true, :reload => true, :status => true
+  supports :restart => true, :start => true, :stop => true, :status => true
   action :nothing
 end 
 
@@ -93,4 +94,8 @@ template "apache-newrelic-monitor" do
   mode "0755"
   notifies :enable, "service[apache-newrelic-monitor]"
   notifies :start, "service[apache-newrelic-monitor]"
+  variables({
+    :runas_user => "#{apache_newrelic_user}",
+    :directory => "#{base_directory}"
+  })
 end

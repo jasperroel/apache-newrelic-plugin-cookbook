@@ -1,8 +1,6 @@
-## Setting the java environment
-default['java']['install_flavor'] = 'openjdk'  # this is the default, but let's be EXPLICIT!
-default['java']['jdk_version'] = '7'
-
-default['apache_newrelic_plugin']['license'] = '<your license>'
+unless node['newrelic'].nil? or node['newrelic']['license'].nil?
+  default['apache_newrelic_plugin']['license'] = node['newrelic']['license']
+end
 ## Setting the plugin default (mostly commented out because the plugin also assumes the same defaults)
 default['apache_newrelic_plugin']['agents'] = [{
  :name => 'my-hostname',
