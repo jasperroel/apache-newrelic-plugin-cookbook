@@ -50,7 +50,8 @@ template "newrelic.json" do
   owner apache_newrelic_user
   group apache_newrelic_user
   variables({
-    :newrelic_licence => node['apache_newrelic_plugin']['license']
+    #:newrelic_licence => node['apache_newrelic_plugin']['license']
+    :newrelic_licence => node['newrelic']['license']
   })
 end
 
