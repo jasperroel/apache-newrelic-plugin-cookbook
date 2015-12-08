@@ -1,9 +1,22 @@
-#!/bin/bash
+#!/bin/sh
+#
+# /etc/init.d/apache-newrelic-plugin
+# Supports the java application used to monitor Apache instances
+# and report back to New Relic
+#
+# chkconfig: 2345 95 05	(1)
+# description: Apache New Relic plugin daemon
+#
+# processname: apache-newrelic-plugin
+# config: <%= @directory %>/config/plugin.json
+# pidfile: <%= @directory %>/bin/newrelic.pid
 
-DIRECTORY=/opt/apache-newrelic-plugin
+# Set variables
+DIRECTORY=<%= @directory %>
 BIN_DIRECTORY=${DIRECTORY}/bin
 START_SCRIPT=${BIN_DIRECTORY}/start
 PID_FILE=${BIN_DIRECTORY}/newrelic.pid
+RUNAS=<%= @runas_user %>
 
 # ***********************************************
 # ***********************************************
@@ -90,6 +103,6 @@ restart)
 ;;
 
 *)
-    echo "Usage: $0 {status|start|stop|restart}"
+    echo "Usage: $0 {start|stop|restart|status}"
     exit 1
 esac
