@@ -2,13 +2,13 @@
   "agents": [
   <% @agents.each_with_index do |agent, i| %>
     {
-      "name" : "<%= agent.name %>",
-      "protocol" : "<%= agent.protocol %>",
-      "host" : "<%= agent.host %>",
-      "port" : <%= agent.port %>,
-      "modStatusUrl" : "<%= agent.mod_status_url %>",
-      "connectionTimeout" : <%= agent.connection_timeout %>,
-      "readTimeout" : <%= agent.read_timeout %>
+      <% if agent.attribute?(:name) %>"name" : "<%= agent.name %>",
+      <% end %><% if agent.attribute?(:protocol) %> "protocol" : "<%= agent.protocol %>",
+      <% end %><% if agent.attribute?(:port) %>"port" : <%= agent.port %>,
+      <% end %><% if agent.attribute?(:mod_status_url) %>"modStatusUrl" : "<%= agent.mod_status_url %>",
+      <% end %><% if agent.attribute?(:connection_timeout) %>"connectionTimeout" : <%= agent.connection_timeout %>,
+      <% end %><% if agent.attribute?(:read_timeout) %>"readTimeout" : <%= agent.read_timeout %>,
+      <% end %>"host" : "<%= agent.host %>",
     }<% if i < @agents.size - 1 %>,<% end %>
   <% end %>
   ]
