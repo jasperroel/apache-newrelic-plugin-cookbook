@@ -7,7 +7,7 @@ Requires Java and a valid New Relic license
 ## Atributes
 
 
-`node['apache_newrelic_plugin']['license']` - Your New Relic license (defaults to `node['newrelic']['license']`)
+`node['newrelic']['license']` - Your New Relic license (defaults to `node['newrelic']['license']`)
 
 `node['apache_newrelic_plugin']['agents']` - A list of Apache instances you want to monitor. Format below
 
@@ -37,9 +37,15 @@ Requires Java and a valid New Relic license
 
 Default values for Agents:
 protocol: http
-host: localhost
-port: 8080
+port: 80
 mod_status_url: /server-status?auto
 connection_timeout: 15000 (15 seconds)
 read_timeout: 15000 (15 seconds)
 
+The only requirement is to set a hostname for a valid agent:
+```ruby
+[
+ {
+  :host => 'localhost',
+ }
+]```
