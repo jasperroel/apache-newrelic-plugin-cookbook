@@ -93,8 +93,6 @@ template "apache-newrelic-monitor" do
   owner "root"
   group "root"
   mode "0755"
-  notifies :enable, "service[apache-newrelic-monitor]"
-  notifies :start, "service[apache-newrelic-monitor]"
   variables({
     :runas_user => apache_newrelic_user,
     :directory => base_directory
